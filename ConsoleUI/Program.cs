@@ -1,6 +1,11 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
+using Entities.Concrete;
+using Entities.DTOs;
 using System;
+using System.Collections.Generic;
 
 namespace ConsoleUI
 {
@@ -9,34 +14,31 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
      
-            BrandManager brandManager = new BrandManager(new InMemoryBrandDal());
-            CarManager carManager = new CarManager(new InMemoryCarDal());
-            ColorManager colorManager = new ColorManager(new InMemoryColorDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            CarManager carManager = new CarManager(new EfCarDal());
+            ColorManager colorManager = new ColorManager(new EfColorDal());
 
-
-            Console.WriteLine("Elimizdeki araç markaları:");
-            foreach (var brands in brandManager.GetAll())
-            {
-                
-                Console.WriteLine(brands.BrandName);
-            }
-            Console.WriteLine();
+            var result = carManager.GetCarDetails();
             
-            Console.WriteLine("Arabaların özellikleri:");
-            Console.WriteLine();
-            foreach (var cars in carManager.GetAll())
+            if(result.Success)
             {
-                Console.WriteLine(cars.ModelYear+" "+cars.Description +"  "+" Günlük Kiralama:"+" "+cars.DailyPrice );
-                
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice);
+                }
             }
-            Console.WriteLine();
-
-            Console.WriteLine("Renk çeşitleri");
-
-            foreach (var colors in colorManager.GetAll())
+            else
             {
-                Console.WriteLine(colors.ColorName);
+                Console.WriteLine(result.Message);
             }
+
+            //foreach (var car in carManager.GetAll())
+            //{
+            //    Console.WriteLine("-{0} marka, {1} renk, {2} Tl, {3} model, {4}\n", brandManager.GetById(car.BrandId).BrandName,colorManager.GetById(car.ColorId).ColorName,car.ModelYear,car.DailyPrice,car.Description);
+            //}
+
+
+
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Entities.Concrete;
 using System.Linq;
 using System.Text;
+using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.InMemory
 {
@@ -37,9 +38,19 @@ namespace DataAccess.Concrete.InMemory
             return _colors;
         }
 
+        public List<Color> GetAll(Expression<Func<Color, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public Color GetById(int id)
         {
             return _colors.SingleOrDefault(c => c.ColorId == id);
+        }
+
+        public Color GetById(Expression<Func<Color, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Color color)
