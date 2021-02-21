@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Concrete;
+using Business.Constants;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -17,28 +18,38 @@ namespace ConsoleUI
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             CarManager carManager = new CarManager(new EfCarDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
+    
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            UserManager userManager = new UserManager(new EfUserDal());
 
-            var result = carManager.GetCarDetails();
-            
-            if(result.Success)
-            {
-                foreach (var car in result.Data)
-                {
-                    Console.WriteLine(car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
-
-            //foreach (var car in carManager.GetAll())
+            //Console.WriteLine("CarId\tFirstName\tLastName\tCompanyName\tBrand\tColor\tRentDate\tReturnDate\t");
+            //var result = rentalManager.GetRentalDetail();
+            //foreach (var rental in result.Data)
             //{
-            //    Console.WriteLine("-{0} marka, {1} renk, {2} Tl, {3} model, {4}\n", brandManager.GetById(car.BrandId).BrandName,colorManager.GetById(car.ColorId).ColorName,car.ModelYear,car.DailyPrice,car.Description);
+            //    Console.WriteLine(rental.CarId + "\t" + rental.FirstName + "\t\t" + rental.LastName + "\t\t" + rental.CompanyName + "\t"
+            //        + rental.CarBrand + "\t" + rental.CarColor + "\t" + rental.RentDate + "\t" + rental.ReturnDate);
+            //}
+            //var result = carManager.GetCarDetails();
+
+            //if(result.Success)
+            //{
+            //    foreach (var car in result.Data)
+            //    {
+            //        Console.WriteLine(car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice);
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine(result.Message);
             //}
 
-
-
+            CustomerDeleting();
+        }
+        private static void CustomerDeleting()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            var result = customerManager.Delete(new Customer { UserId = 5, CompanyName = "Y", CustomerId = 5 });
+            Console.WriteLine(result.Message);
         }
     }
 }
