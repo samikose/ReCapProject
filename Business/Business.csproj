@@ -15,10 +15,4 @@
     <ProjectReference Include="..\Entities\Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ValidationRules\FluentValidation\BrandValidator\" />
-    <Folder Include="ValidationRules\FluentValidation\ColorValidator\" />
-    <Folder Include="ValidationRules\FluentValidation\RentalValidator\" />
-  </ItemGroup>
-
 </Project>
