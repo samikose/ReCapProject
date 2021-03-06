@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using Core.DataAccess;
 
 namespace Core.DataAccess.EntityFramework
 {
@@ -40,7 +41,7 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        public TEntity GetById(Expression<Func<TEntity, bool>> filter)
+        public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             using (TContext context = new TContext())
             {

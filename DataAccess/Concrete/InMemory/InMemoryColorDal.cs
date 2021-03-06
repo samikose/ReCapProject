@@ -32,6 +32,11 @@ namespace DataAccess.Concrete.InMemory
             _colors.Remove(colorToDelete);
         }
 
+        public Color Get(Expression<Func<Color, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Color> GetAll()
         {
             return _colors;

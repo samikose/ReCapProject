@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation.CarValidator;
 using Core.Aspect.Autofac.Validation;
@@ -23,6 +24,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarValidator))]
+        [SecuredOperation("car.add,admin")]
         public IResult Add(Car car)
         {
             _carDal.Add(car);
@@ -55,9 +57,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max));
         }
 
-        public IDataResult<Car> GetById(int id)
+        public IDataResult<Car> Get(int id)
         {
-            return new SuccessDataResult<Car>(_carDal.GetById(c => c.Id == id));
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
 
         public IDataResult<List<Car>> GetByModelYear(string year)
